@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     var lastAction         = 0,
         lastFile           = undefined;
   
-    var firebase = require('node_modules/firebase');
+    var firebase = require('node_modules/firebase/firebase-browser');
   
     var config = {
       apiKey: "AIzaSyDEc5ANSFNlg2iNyYW7nfwhwMTaEEhepoM",
