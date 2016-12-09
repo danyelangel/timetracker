@@ -43,7 +43,7 @@ define(function (require, exports, module) {
         $(window).on('keypress', function () {
             handleAction();
         });
-
+        console.log('Timetracker initialized');
     }
 
     function sendHeartbeat(file, timestamp, project, language, isWrite, lines) {
