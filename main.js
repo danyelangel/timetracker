@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     };
     firebase.initializeApp(config);
 
-    function init() {
+    function init() { 
 
         setupEventListeners();
 
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
             is_write: isWrite ? true : false,
             lines: lines,
         });
-        lastAction = timestamp;∫
+        lastAction = timestamp;
         lastFile = file;
     }
 
