@@ -1,0 +1,15 @@
+{
+  "name": "timetracker",
+  "title": "Timetracker",
+  "description": "Automatic time tracking and analytics about your programming.",
+  "homepage": "https://github.com/danyelangel/timetracker",
+  "version": "0.1.0",
+  "author": "danyelangel@hotmail.com",
+  "license": "",
+  "engines": {
+    "brackets": ">=0.24.0"
+  },
+  "dependencies": {
+    "firebase": "^3.6.3"
+  }
+}
