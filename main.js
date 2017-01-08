@@ -29,6 +29,9 @@ define(function (require, exports, module) {
       storageBucket: "timetracker-ecd54.appspot.com",
       messagingSenderId: "92200809868"
     };
+  
+    console.log(config);
+  
     firebase.initializeApp(config);
 
     function init() { 
