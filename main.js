@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var VERSION = '0.1.0';
+    var VERSION = '0.1.1';
 
     var MainViewManager    = brackets.getModule("view/MainViewManager"),
         DocumentManager    = brackets.getModule("document/DocumentManager"),
@@ -14,7 +14,11 @@ define(function (require, exports, module) {
         Menus              = brackets.getModule("command/Menus");
 
     var lastAction         = 0,
-        lastFile           = undefined;
+        lastFile           = undefined,
+        lastPause          = Date.now(),
+        pausePeriod        = 60 * 60 * 1000,
+        pauseLength        = 05 * 60 * 1000,
+        idleTime           = 15 * 60 * 1000;
   
     require('https://www.gstatic.com/firebasejs/3.6.3/firebase.js');
   
@@ -31,6 +35,8 @@ define(function (require, exports, module) {
 
         setupEventListeners();
 
+        console.log('Timetracker initialized');
+      
     }
 
     function setupEventListeners() {
@@ -43,7 +49,25 @@ define(function (require, exports, module) {
         $(window).on('keypress', function () {
             handleAction();
         });
-        console.log('Timetracker initialized');
+    }
+  
+    function checkActivePause() {
+      if (isIdle()) {
+        lastPause = Date.now();
+      } else if (lastPause + pausePeriod < Date.now()) {
+        makePause(function () {
+          lastPause = Date.now();
+        });
+      }
+    }
+  
+    function makePause(callback) {
+      if (confirm('-- MAKE AN ACTIVE PAUSE --')) {
+        setTimeout(function () {
+          alert('-- PAUSE DONE --');
+          callback();
+        }, pauseLength);
+      }
     }
 
     function sendHeartbeat(file, timestamp, project, language, isWrite, lines) {
@@ -60,11 +84,16 @@ define(function (require, exports, module) {
         });
         lastAction = timestamp;
         lastFile = file;
+        checkActivePause();
     }
 
     function enoughTimePassed() {
         return lastAction + 120000 < Date.now();
     }
+      
+    function isIdle() {
+        return lastAction + idleTime < Date.now();
+    }  
 
     function handleAction(isWrite) {
         var currentDocument = DocumentManager.getCurrentDocument();
