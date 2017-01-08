@@ -14,7 +14,11 @@ define(function (require, exports, module) {
         Menus              = brackets.getModule("command/Menus");
 
     var lastAction         = 0,
-        lastFile           = undefined;
+        lastFile           = undefined,
+        lastPause          = Date.now(),
+        pausePeriod        = 60 * 60 * 1000,
+        pauseLength        =  5 * 60 * 1000,
+        idleTime           = 15 * 60 * 1000;
   
     require('https://www.gstatic.com/firebasejs/3.6.3/firebase.js');
   
