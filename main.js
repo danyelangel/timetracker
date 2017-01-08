@@ -20,6 +20,8 @@ define(function (require, exports, module) {
         pauseLength        = 05 * 60 * 1000,
         idleTime           = 15 * 60 * 1000;
   
+   console.log('PLOP');
+  
     require('https://www.gstatic.com/firebasejs/3.6.3/firebase.js');
   
     var config = {
