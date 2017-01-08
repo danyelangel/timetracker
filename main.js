@@ -30,6 +30,8 @@ define(function (require, exports, module) {
     function init() { 
 
         setupEventListeners();
+      
+        console.log('Timetracker initialized');
 
     }
 
@@ -43,7 +45,25 @@ define(function (require, exports, module) {
         $(window).on('keypress', function () {
             handleAction();
         });
-        console.log('Timetracker initialized');
+    }
+  
+    function checkActivePause() {
+      if (isIdle()) {
+        lastPause = Date.now();
+      } else if (lastPause + pausePeriod < Date.now()) {
+        makePause(function () {
+          lastPause = Date.now();
+        });
+      }
+    }
+  
+    function makePause(callback) {
+      if (window.confirm('-- MAKE AN ACTIVE PAUSE --')) {
+        window.setTimeout(function () {
+          window.alert('-- PAUSE DONE --');
+          callback();
+        }, pauseLength);
+      }
     }
 
     function sendHeartbeat(file, timestamp, project, language, isWrite, lines) {
@@ -60,10 +80,15 @@ define(function (require, exports, module) {
         });
         lastAction = timestamp;
         lastFile = file;
+        checkActivePause();
     }
 
     function enoughTimePassed() {
         return lastAction + 120000 < Date.now();
+    }
+  
+    function isIdle() {
+        return lastAction + idleTime < Date.now();
     }
 
     function handleAction(isWrite) {
