@@ -56,24 +56,24 @@ define(function (require, exports, module) {
         });
     }
   
-    function checkActivePause() {
-      if (isIdle()) {
-        lastPause = Date.now();
-      } else if (lastPause + pausePeriod < Date.now()) {
-        makePause(function () {
-          lastPause = Date.now();
-        });
-      }
-    }
+//    function checkActivePause() {
+//      if (isIdle()) {
+//        lastPause = Date.now();
+//      } else if (lastPause + pausePeriod < Date.now()) {
+//        makePause(function () {
+//          lastPause = Date.now();
+//        });
+//      }
+//    }
   
-    function makePause(callback) {
-      if (confirm('-- MAKE AN ACTIVE PAUSE --')) {
-        setTimeout(function () {
-          alert('-- PAUSE DONE --');
-          callback();
-        }, pauseLength);
-      }
-    }
+//    function makePause(callback) {
+//      if (confirm('-- MAKE AN ACTIVE PAUSE --')) {
+//        setTimeout(function () {
+//          alert('-- PAUSE DONE --');
+//          callback();
+//        }, pauseLength);
+//      }
+//    }
 
     function sendHeartbeat(file, timestamp, project, language, isWrite, lines) {
         var date = new Date(timestamp);
@@ -89,7 +89,7 @@ define(function (require, exports, module) {
         });
         lastAction = timestamp;
         lastFile = file;
-        checkActivePause();
+        //checkActivePause();
     }
 
     function enoughTimePassed() {
