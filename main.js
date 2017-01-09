@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var VERSION = '0.1.0';
+    var VERSION = '0.1.2';
 
     var MainViewManager    = brackets.getModule("view/MainViewManager"),
         DocumentManager    = brackets.getModule("document/DocumentManager"),
@@ -13,12 +13,13 @@ define(function (require, exports, module) {
         CommandManager     = brackets.getModule("command/CommandManager"),
         Menus              = brackets.getModule("command/Menus");
 
-    var lastAction         = 0,
+    var currentPause,
+        lastAction         = 0,
         lastFile           = undefined,
         lastPause          = Date.now(),
         pausePeriod        = 60 * 60 * 1000,
-        pauseLength        =  5 * 60 * 1000,
-        idleTime           = 15 * 60 * 1000;
+        pauseLength        = 5 * 60 * 1000,
+        idleTime           = 10 * 60 * 1000;
   
     require('https://www.gstatic.com/firebasejs/3.6.3/firebase.js');
   
@@ -63,10 +64,13 @@ define(function (require, exports, module) {
   
     function makePause(callback) {
       if (window.confirm('-- MAKE AN ACTIVE PAUSE --')) {
-        window.setTimeout(function () {
+        window.clearTimeout(currentPause);
+        currentPause = window.setTimeout(function () {
           window.alert('-- PAUSE DONE --');
           callback();
         }, pauseLength);
+      } else {
+        callback();
       }
     }
 
@@ -82,9 +86,9 @@ define(function (require, exports, module) {
             is_write: isWrite ? true : false,
             lines: lines,
         });
+        checkActivePause();
         lastAction = timestamp;
         lastFile = file;
-        checkActivePause();
     }
 
     function enoughTimePassed() {
