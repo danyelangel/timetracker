@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var VERSION = '0.1.2';
+    var VERSION = '0.1.3';
 
     var MainViewManager    = brackets.getModule("view/MainViewManager"),
         DocumentManager    = brackets.getModule("document/DocumentManager"),
@@ -17,9 +17,9 @@ define(function (require, exports, module) {
         lastAction         = 0,
         lastFile           = undefined,
         lastPause          = Date.now(),
-        pausePeriod        = 60 * 60 * 1000,
-        pauseLength        = 5 * 60 * 1000,
-        idleTime           = 10 * 60 * 1000;
+        pausePeriod        = 90 * 60 * 1000,
+        pauseLength        = 1 * 60 * 1000,
+        idleTime           = 15 * 60 * 1000;
   
     require('https://www.gstatic.com/firebasejs/3.6.3/firebase.js');
   
